@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 <title>Underwater Fish Catch Game - Wavy Fish Bubbles</title>
 <style>
   body { margin:0; background:#ffffff; overflow:hidden; touch-action: none;}
@@ -27,6 +28,22 @@
     z-index: 10;
   }
   #restartBtn:hover { background-color: #218838; }
+  html, body {
+  margin: 0;
+  padding: 0;
+  /*width: 100%;
+  height: 100%;*/
+  overflow: hidden;
+  background: #0077be; /* aqua background */
+}
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;   /* VERY IMPORTANT */
+}
+
+
+
 </style>
 </head>
 <body>
@@ -36,6 +53,14 @@
 <script>
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = Math.floor(window.innerHeight * 0.7);
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas(); // IMPORTANT: call it once at start
+
 const restartBtn = document.getElementById('restartBtn');
 
 let score, lives, frame, fishArray, gameRunning, particles = [], fishBubbles = [];
@@ -272,8 +297,9 @@ function handleTouch(e){
   const rect = canvas.getBoundingClientRect();
   const touch = e.touches[0];
 
+  const NET_OFFSET_Y = 80; // adjust 60–120 based on net size
   net.x = touch.clientX - rect.left;
-  net.y = touch.clientY - rect.top;
+  net.y = touch.clientY - NET_OFFSET_Y;
 }
 
 
