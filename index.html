@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Underwater Fish Catch Game - Wavy Fish Bubbles</title>
 <style>
-  body { margin:0; background:#ffffff; overflow:hidden; }
+  body { margin:0; background:#ffffff; overflow:hidden; touch-action: none;}
   canvas {
     display:block; margin:0 auto;
     border: 3px solid black;
@@ -263,6 +263,19 @@ canvas.addEventListener('mousemove', e=>{
   net.x = e.clientX - rect.left;
   net.y = e.clientY - rect.top;
 });
+// ------------------- Touch Control (Mobile Support) -------------------
+canvas.addEventListener('touchstart', handleTouch, { passive: false });
+canvas.addEventListener('touchmove', handleTouch, { passive: false });
+
+function handleTouch(e){
+  e.preventDefault(); // stop page scrolling
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+
+  net.x = touch.clientX - rect.left;
+  net.y = touch.clientY - rect.top;
+}
+
 
 // ------------------- Restart Button -------------------
 restartBtn.addEventListener('click', ()=>{ initGame(); });
